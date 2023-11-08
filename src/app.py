@@ -26,7 +26,7 @@ for key in [
 ]:
     if key not in os.environ:
         errors.append(f"Please set the {key} environment variable.")
-if len(errors) > 0:
+if errors:
     st.error("\n".join(errors))
     st.stop()
 
@@ -83,7 +83,7 @@ def get_chat_message(
             file_path = os.path.join(ROOT_DIR, "src", "assets", "user_icon.png")
             src = f"data:image/gif;base64,{get_local_img(file_path)}"
     icon_code = f"<img class='chat-icon' src='{src}' width=32 height=32 alt='avatar'>"
-    formatted_contents = f"""
+    return f"""
     <div class="{div_class}">
         {icon_code}
         <div class="chat-bubble" style="background: {color};">
@@ -91,7 +91,6 @@ def get_chat_message(
         </div>
     </div>
     """
-    return formatted_contents
 
 
 async def main(human_prompt: str) -> dict:
